@@ -34,7 +34,7 @@ public class TokenizerMapperPerTaskTally
 
         //Increment count
         currCount.set(currCount.get() + 1);
-        countMap.put(word, currCount);
+        countMap.put(new Text(word.toString()), currCount);
       }
     }
   }
