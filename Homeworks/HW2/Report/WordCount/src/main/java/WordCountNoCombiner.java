@@ -19,7 +19,6 @@ public class WordCountNoCombiner {
     Job job = Job.getInstance(conf, "word count - no combiner");
     job.setJarByClass(WordCountNoCombiner.class);
     job.setMapperClass(TokenizerMapper.class);
-
     job.setPartitionerClass(WordPartitioner.class);
     //Setting number of reducer in accordance to the number of words
     job.setReducerClass(IntSumReducer.class);

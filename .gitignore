@@ -1,5 +1,4 @@
-
-Homeworks/HW1/data/hw1.txt
 AWS-EMR-kp.ppk
-Homeworks/HW2/data/hw1.txt
-Homeworks/HW2/data/hw1_short.txt
+Homeworks/HW1/data/*
+Homeworks/HW2/data/*
+Homeworks/HW3/Data/*

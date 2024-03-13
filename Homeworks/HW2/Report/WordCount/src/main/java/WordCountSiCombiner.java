@@ -13,12 +13,13 @@ import Utils.Mappers.TokenizerMapper;
 import Utils.IntSumReducer;
 import Utils.WordPartitioner;
 
-public class WordCountNoCombiner {
+public class WordCountSiCombiner {
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
-    Job job = Job.getInstance(conf, "word count - no combiner");
-    job.setJarByClass(WordCountNoCombiner.class);
+    Job job = Job.getInstance(conf, "word count");
+    job.setJarByClass(WordCountSiCombiner.class);
     job.setMapperClass(TokenizerMapper.class);
+    job.setCombinerClass(IntSumReducer.class);
 
     job.setPartitionerClass(WordPartitioner.class);
     //Setting number of reducer in accordance to the number of words
