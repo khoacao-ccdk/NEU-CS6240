@@ -1,19 +1,15 @@
-package neu.cs6240.Utils.Mappers;
+package neu.cs6240.Utils;
 
 import neu.cs6240.Utils.Configuration;
 import neu.cs6240.Utils.FlightHeader;
-import neu.cs6240.Utils.FlightKey;
 
 import neu.cs6240.Utils.FlightValue;
 import com.opencsv.CSVParser;
 import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.log4j.Logger;
 
-public class FlightMapper extends Mapper<Object, Text, FlightKey, FlightValue> {
-  private Logger logger = Logger.getLogger(FlightMapper.class);
-
+public class FlightMapper extends Mapper<Object, Text, Text, FlightValue> {
   public void map(Object key, Text value, Context context)
       throws IOException, InterruptedException {
     CSVParser parser = new CSVParser();
@@ -29,8 +25,6 @@ public class FlightMapper extends Mapper<Object, Text, FlightKey, FlightValue> {
     //Only consider non-cancelled and non-diverted flights
     if (!(cancelled.equals(Configuration.EXPECTED_CANCELLED_STATUS)
         && diverted.equals(Configuration.EXPECTED_DIVERTED_STATUS))) {
-      System.out.println("Skipping due to cancelled/diverted");
-      logger.error("Skipping due to cancelled/diverted");
       return;
     }
 
@@ -40,25 +34,23 @@ public class FlightMapper extends Mapper<Object, Text, FlightKey, FlightValue> {
         &&
         (year < Configuration.INTERVAL_END_YEAR || (year == Configuration.INTERVAL_END_YEAR
             && month <= Configuration.INTERVAL_END_MONTH))) {
-      FlightKey fKey;
-
-
-      if (origin.equals(Configuration.ORIGIN_AIRPORT) && !dest.equals(Configuration.DEST_AIRPORT)) {
-        fKey = new FlightKey(flightDate, FlightKey.LEG_ONE);
-      } else if (!origin.equals(Configuration.ORIGIN_AIRPORT) && dest.equals(Configuration.DEST_AIRPORT)) {
-        fKey = new FlightKey(flightDate, FlightKey.LEG_TWO);
-      } else {
-        return;
+      String transitAirport;
+      if (origin.equals(Configuration.ORIGIN_AIRPORT) && !dest.equals(Configuration.DEST_AIRPORT)){
+        transitAirport = dest;
       }
+      else if (!origin.equals(Configuration.ORIGIN_AIRPORT) && dest.equals(Configuration.DEST_AIRPORT)){
+        transitAirport = origin;
+      }
+      else return;
+
 
       //Filtering necessary data only
       String depTime = tokens[FlightHeader.DEP_TIME];
       String arrTime = tokens[FlightHeader.ARR_TIME];
-      int arrDelayMinutes = Integer.parseInt(tokens[FlightHeader.ARR_DELAY_MINUTES]);
+      int arrDelayMinutes = (int) Math.round(Double.parseDouble(tokens[FlightHeader.ARR_DELAY_MINUTES]));
 
       FlightValue fValue = new FlightValue(origin, dest, depTime, arrTime, arrDelayMinutes);
-      //Emits the key-value pair
-      context.write(fKey, fValue);
+      context.write(new Text(String.format("%s,%s", flightDate, transitAirport)), fValue);
     }
   }
 }

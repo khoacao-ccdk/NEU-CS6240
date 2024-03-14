@@ -1,14 +1,13 @@
 package neu.cs6240;
 
-import neu.cs6240.Utils.FlightPartitioner;
 import neu.cs6240.Utils.FlightReducer;
-import neu.cs6240.Utils.Mappers.FlightMapper;
+import neu.cs6240.Utils.FlightValue;
+import neu.cs6240.Utils.FlightMapper;
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Counters;
 import org.apache.hadoop.mapreduce.Job;
@@ -35,12 +34,11 @@ public class Plain {
     job.setJarByClass(Plain.class);
     job.setMapperClass(FlightMapper.class);
 
-    job.setPartitionerClass(FlightPartitioner.class);
     //Setting number of reducer in accordance to the number of words
     job.setReducerClass(FlightReducer.class);
     job.setNumReduceTasks(NUM_REDUCER);
     job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(DoubleWritable.class);
+    job.setOutputValueClass(FlightValue.class);
     FileInputFormat.addInputPath(job, new Path(args[0]));
     Path outputPath = new Path(args[1]);
     FileOutputFormat.setOutputPath(job, outputPath);
@@ -71,7 +69,7 @@ public class Plain {
     double avgDelay = 1.0d * totalMinutesDelayed / totalFlightsMatched;
     outputStream.writeBytes("Total flights matched: " + totalFlightsMatched + "\n");
     outputStream.writeBytes("Total minutes delayed: " + totalMinutesDelayed + "\n");
-    outputStream.writeBytes("Average delay minutes" + avgDelay);
+    outputStream.writeBytes("Average delay minutes: " + avgDelay);
 
     // Close the writer
     outputStream.close();
