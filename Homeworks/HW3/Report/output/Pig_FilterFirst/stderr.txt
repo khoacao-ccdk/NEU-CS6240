@@ -1,0 +1,3 @@
+WARNING: HADOOP_PREFIX has been replaced by HADOOP_HOME. Using value of HADOOP_PREFIX.
+2024-03-16 18:58:00 Shutting down Tez session , sessionName=PigLatin:FilterFirst.pig, applicationId=application_1710610568025_0008
+Command exiting with ret '0'

@@ -1,12 +1,6 @@
 package neu.cs6240.Utils;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 public class Configuration {
-  public static final Set<Character> VALID_START_WORDS =
-      new HashSet<>(Arrays.asList('m','n','o','p','q','M','N','O','P','Q'));
   public static final int NUM_REDUCER = 10;
   public static final String ORIGIN_AIRPORT = "ORD";
   public static final String DEST_AIRPORT = "JFK";

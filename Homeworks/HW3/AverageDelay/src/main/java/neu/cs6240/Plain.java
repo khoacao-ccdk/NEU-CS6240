@@ -8,6 +8,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Counters;
 import org.apache.hadoop.mapreduce.Job;
@@ -51,27 +52,16 @@ public class Plain {
           .getValue();
       long totalMinutesDelayed = counters.findCounter(FlightCounters.TOTAL_MINUTES_DELAYED)
           .getValue();
-      writeGlobalCounter(totalFlightsMatched, totalMinutesDelayed, outputPath, conf);
+      writeGlobalCounter(totalFlightsMatched, totalMinutesDelayed);
     }
     System.exit(success ? 0 : 1);
   }
 
-  private static void writeGlobalCounter(long totalFlightsMatched, long totalMinutesDelayed,
-      Path outputPath, Configuration conf) throws IOException {
-    System.out.println("Output path:" + outputPath);
-    Path outputFilePath = new Path(outputPath, "output.txt");
-
-    // Create a writer to write to the output file
-    FileSystem fs = FileSystem.get(conf);
-    FSDataOutputStream outputStream = fs.create(outputFilePath, true);
-
+  private static void writeGlobalCounter(long totalFlightsMatched, long totalMinutesDelayed) {
     // Write the counter values to the file
     double avgDelay = 1.0d * totalMinutesDelayed / totalFlightsMatched;
-    outputStream.writeBytes("Total flights matched: " + totalFlightsMatched + "\n");
-    outputStream.writeBytes("Total minutes delayed: " + totalMinutesDelayed + "\n");
-    outputStream.writeBytes("Average delay minutes: " + avgDelay);
-
-    // Close the writer
-    outputStream.close();
+    System.out.println("Total flights matched: " + totalFlightsMatched + "\n");
+    System.out.println("Total minutes delayed: " + totalMinutesDelayed + "\n");
+    System.out.println("Average delay minutes: " + avgDelay);
   }
 }

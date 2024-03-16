@@ -1,0 +1,5 @@
+Total flights matched: 466756
+
+Total minutes delayed: 23651106
+
+Average delay minutes: 50.67124150519758
