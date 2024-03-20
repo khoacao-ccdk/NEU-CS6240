@@ -1,7 +1,9 @@
-package neu.cs6240.Utils;
+package neu.cs6240.Utils.Reducer;
 
 import java.io.IOException;
 import java.util.*;
+
+import neu.cs6240.Utils.FlightKey;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;

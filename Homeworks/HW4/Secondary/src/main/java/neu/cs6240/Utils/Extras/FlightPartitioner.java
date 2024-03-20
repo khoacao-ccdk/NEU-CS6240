@@ -1,5 +1,6 @@
-package neu.cs6240.Utils;
+package neu.cs6240.Utils.Extras;
 
+import neu.cs6240.Utils.FlightKey;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Partitioner;
 

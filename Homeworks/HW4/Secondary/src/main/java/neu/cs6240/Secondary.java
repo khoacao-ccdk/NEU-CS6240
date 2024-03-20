@@ -1,9 +1,9 @@
 package neu.cs6240;
 
-import neu.cs6240.Utils.FlightGroupComparator;
-import neu.cs6240.Utils.FlightKeyComparator;
-import neu.cs6240.Utils.FlightPartitioner;
-import neu.cs6240.Utils.FlightReducer;
+import neu.cs6240.Utils.Extras.FlightGroupComparator;
+import neu.cs6240.Utils.Extras.FlightKeyComparator;
+import neu.cs6240.Utils.Extras.FlightPartitioner;
+import neu.cs6240.Utils.Reducer.FlightReducer;
 import neu.cs6240.Utils.Mapper.FlightMapper;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
