@@ -9,7 +9,9 @@ public class Common {
   public static final String EXPECTED_CANCELLED_STATUS = "0.00";
   public static final String HBASE_TABLE = "Flight Record";
   public static final String HBASE_COL_FAMILY = "Flights";
-  public static final String HBASE_VAL_COL_NAME = "Data";
+  public static final String HBASE_VAL_COL_NAME = "RowText";
+  public static final String HBASE_YEAR_COL_NAME = "year";
+  public static final String HBASE_CANCELLED_COL_NAME = "cancelled";
 
   public static final Set<Integer> KEY_SET_INDEX = new HashSet<>(Arrays.asList(
           FlightHeader.AIRLINE,

@@ -15,8 +15,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable, Writable> {
     private static final long FLUSH_PERIOD = Duration.of(30, ChronoUnit.SECONDS).toMillis();
@@ -47,10 +45,12 @@ public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable
 
         //Pulling necessary fields to use as key
         String airline = tokens[FlightHeader.AIRLINE];
+        String year = tokens[FlightHeader.YEAR];
         String month = tokens[FlightHeader.MONTH];
         String flightDate = tokens[FlightHeader.FLIGHT_DATE];
         String flightNumber = tokens[FlightHeader.FLIGHT_NUM];
         String origin = tokens[FlightHeader.ORIGIN];
+        String cancelled = tokens[FlightHeader.CANCELLED];
 
         /**
          * Key consists of the airline name, month, date of flight, and flight number
@@ -67,10 +67,24 @@ public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable
         Put putRequest = new Put(Bytes.toBytes(fKey));
 
         //Put the whole record into the "FlightData" column. This data will be parsed later in teh HCompute step
+        //This is based on the Assignment's request
         putRequest.addColumn(
             Bytes.toBytes(Common.HBASE_COL_FAMILY),
             Bytes.toBytes(Common.HBASE_VAL_COL_NAME),
             Bytes.toBytes(value.toString())
+        );
+
+        //Add additional columns that are later used for filtering purpose
+        putRequest.addColumn(
+                Bytes.toBytes(Common.HBASE_COL_FAMILY),
+                Bytes.toBytes(Common.HBASE_YEAR_COL_NAME),
+                Bytes.toBytes(year)
+        );
+
+        putRequest.addColumn(
+                Bytes.toBytes(Common.HBASE_COL_FAMILY),
+                Bytes.toBytes(Common.HBASE_CANCELLED_COL_NAME),
+                Bytes.toBytes(cancelled)
         );
 
         mutator.mutate(putRequest);

@@ -8,9 +8,13 @@ import neu.cs6240.Utils.FlightKey;
 import neu.cs6240.Utils.Mapper.HComputeMapper;
 import neu.cs6240.Utils.Reducer.FlightReducer;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.CompareOperator;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
@@ -23,9 +27,26 @@ public class HCompute {
         Job job = Job.getInstance(conf, "Average Delay - HCompute");
         job.setJarByClass(HCompute.class);     // class that contains mapper
 
+        //Set up a filter condition
+        FilterList filterList = new FilterList(FilterList.Operator.MUST_PASS_ALL);
+        SingleColumnValueFilter yearFilter = new SingleColumnValueFilter(
+                Common.HBASE_COL_FAMILY.getBytes(),
+                Common.HBASE_YEAR_COL_NAME.getBytes(),
+                CompareOperator.EQUAL,
+                Bytes.toBytes(Common.EXPECTED_YEAR));
+        filterList.addFilter(yearFilter);
+
+        SingleColumnValueFilter cancelledFilter = new SingleColumnValueFilter(
+                Common.HBASE_COL_FAMILY.getBytes(),
+                Common.HBASE_CANCELLED_COL_NAME.getBytes(),
+                CompareOperator.EQUAL,
+                Common.EXPECTED_CANCELLED_STATUS.getBytes());
+        filterList.addFilter(cancelledFilter);
+
         Scan scan = new Scan();
         scan.setCaching(500);        // 1 is the default in Scan, which will be bad for MapReduce jobs
         scan.setCacheBlocks(false);  // don't set to true for MR jobs
+        scan.setFilter(filterList);  // Set filter conditions for the scan job
 
         TableMapReduceUtil.initTableMapperJob(
                 Common.HBASE_TABLE,        // input HBase table name
