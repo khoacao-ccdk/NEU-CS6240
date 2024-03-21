@@ -13,11 +13,16 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable, Writable> {
+    private static final long FLUSH_PERIOD = Duration.of(30, ChronoUnit.SECONDS).toMillis();
     private Table fTable;
     private Connection conn;
-
+    private BufferedMutator mutator;
     @Override
     protected void setup(Mapper<Object, Text, ImmutableBytesWritable, Writable>.Context context) throws IOException, InterruptedException {
         super.setup(context);
@@ -25,6 +30,9 @@ public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable
             org.apache.hadoop.conf.Configuration hBaseconf = HBaseConfiguration.create();
             conn = ConnectionFactory.createConnection(hBaseconf);
             fTable = conn.getTable(TableName.valueOf(Common.HBASE_TABLE));
+
+            mutator = conn.getBufferedMutator(TableName.valueOf(Common.HBASE_TABLE));
+            mutator.setWriteBufferPeriodicFlush(FLUSH_PERIOD); //Set a flush duration for buffered write to the table
         }
         catch (Exception e){
             e.printStackTrace();
@@ -37,6 +45,7 @@ public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable
         CSVParser parser = new CSVParser();
         String[] tokens = parser.parseLine(value.toString());
 
+        //Pulling necessary fields to use as key
         String airline = tokens[FlightHeader.AIRLINE];
         String month = tokens[FlightHeader.MONTH];
         String flightDate = tokens[FlightHeader.FLIGHT_DATE];
@@ -64,12 +73,14 @@ public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable
             Bytes.toBytes(value.toString())
         );
 
-        fTable.put(putRequest);
+        mutator.mutate(putRequest);
     }
 
     @Override
     protected void cleanup(Mapper<Object, Text, ImmutableBytesWritable, Writable>.Context context) throws IOException, InterruptedException {
         super.cleanup(context);
+        mutator.flush(); //Flush the pending put requests
+        mutator.close();
         fTable.close();
         conn.close();
     }

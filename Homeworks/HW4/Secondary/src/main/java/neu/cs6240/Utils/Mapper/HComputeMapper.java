@@ -1,45 +1,43 @@
 package neu.cs6240.Utils.Mapper;
 
+import com.opencsv.CSVParser;
 import neu.cs6240.Utils.Common;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Table;
+import neu.cs6240.Utils.FlightHeader;
+import neu.cs6240.Utils.FlightKey;
+import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
-import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.hbase.mapreduce.TableMapper;
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.io.IntWritable;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-public class HComputeMapper extends Mapper<ImmutableBytesWritable, Writable, Text, Text> {
-    private Table fTable;
-    private Connection conn;
+/**
+ * This Mapper class performs the logic almost identical to that of FlightMapper. The difference is in how
+ * it reads the value 
+ */
+public class HComputeMapper extends TableMapper<FlightKey, IntWritable> {
 
-    @Override
-    protected void setup(Mapper<ImmutableBytesWritable, Writable, Text, Text>.Context context) throws IOException, InterruptedException {
-        super.setup(context);
-        try{
-            org.apache.hadoop.conf.Configuration hBaseconf = HBaseConfiguration.create();
-            conn = ConnectionFactory.createConnection(hBaseconf);
-            fTable = conn.getTable(TableName.valueOf(Common.HBASE_TABLE));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            System.exit(2);
-        }
-    }
-
-    public void map(Object key, Text value, Context context)
+    public void map(ImmutableBytesWritable row, Result value, Context context)
             throws IOException, InterruptedException {
+        CSVParser parser = new CSVParser();
 
-    }
+        //Parse the column to String
+        String rowValue = new String((value.getValue(
+                Bytes.toBytes(Common.HBASE_COL_FAMILY),
+                Bytes.toBytes(Common.HBASE_VAL_COL_NAME)
+        )), StandardCharsets.UTF_8);
 
-    @Override
-    protected void cleanup(Mapper<ImmutableBytesWritable, Writable, Text, Text>.Context context) throws IOException, InterruptedException {
-        super.cleanup(context);
-        fTable.close();
-        conn.close();
+        String[] tokens = parser.parseLine(rowValue);
+        if (!Common.isValidRecord(tokens))
+            return;
+
+        String month = tokens[FlightHeader.MONTH];
+        String airline = tokens[FlightHeader.AIRLINE];
+        int arrDelayMinutes = (int) Math.round(Double.parseDouble(tokens[FlightHeader.ARR_DELAY_MINUTES]));
+
+        FlightKey fKey = new FlightKey(airline, month);
+        context.write(fKey, new IntWritable(arrDelayMinutes));
     }
 }
