@@ -24,5 +24,4 @@ public class FlightMapper extends Mapper<Object, Text, FlightKey, IntWritable> {
     FlightKey fKey = new FlightKey(airline, month);
     context.write(fKey, new IntWritable(arrDelayMinutes));
   }
-
 }
