@@ -8,6 +8,7 @@ import neu.cs6240.Utils.FlightKey;
 import neu.cs6240.Utils.Mapper.HComputeMapper;
 import neu.cs6240.Utils.Reducer.FlightReducer;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.CompareOperator;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.Scan;
@@ -15,15 +16,26 @@ import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
 
 import java.io.IOException;
 
 public class HCompute {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-        Configuration conf = HBaseConfiguration.create();
+        Configuration conf = HBaseConfiguration.create(new Configuration());
+
+        String[] arguments = new GenericOptionsParser(conf, args).getRemainingArgs();
+        if(arguments.length != 2){
+            System.err.println("To use this, provide the following: arguments <in>, <out>");
+            System.exit(2);
+        }
+
         Job job = Job.getInstance(conf, "Average Delay - HCompute");
         job.setJarByClass(HCompute.class);     // class that contains mapper
 
@@ -55,7 +67,8 @@ public class HCompute {
                 FlightKey.class,           // mapper output key
                 Text.class,                // mapper output value
                 job);
-        job.setOutputFormatClass(NullOutputFormat.class);
+        job.setMapOutputKeyClass(FlightKey.class);
+        job.setMapOutputValueClass(IntWritable.class);
 
         //The rest is similar to that of the Secondary Sort MR config
         job.setReducerClass(FlightReducer.class);
@@ -65,6 +78,9 @@ public class HCompute {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
 
+        FileInputFormat.addInputPath(job, new Path(arguments[0]));
+        FileOutputFormat.setOutputPath(job, new Path(arguments[1]));
+        System.out.println(arguments[1]);
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

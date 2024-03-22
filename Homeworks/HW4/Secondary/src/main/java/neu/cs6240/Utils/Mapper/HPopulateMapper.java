@@ -17,7 +17,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable, Writable> {
-    private static final long FLUSH_PERIOD = Duration.of(30, ChronoUnit.SECONDS).toMillis();
+    private static final long FLUSH_PERIOD = Duration.of(20, ChronoUnit.SECONDS).toMillis();
     private Table fTable;
     private Connection conn;
     private BufferedMutator mutator;
@@ -45,7 +45,7 @@ public class HPopulateMapper extends Mapper<Object, Text, ImmutableBytesWritable
 
         //Pulling necessary fields to use as key
         String airline = tokens[FlightHeader.AIRLINE];
-        String year = tokens[FlightHeader.YEAR];
+        int year = Integer.valueOf(tokens[FlightHeader.YEAR]);
         String month = tokens[FlightHeader.MONTH];
         String flightDate = tokens[FlightHeader.FLIGHT_DATE];
         String flightNumber = tokens[FlightHeader.FLIGHT_NUM];

@@ -7,7 +7,7 @@ import java.util.Set;
 public class Common {
   public static final int EXPECTED_YEAR = 2008;
   public static final String EXPECTED_CANCELLED_STATUS = "0.00";
-  public static final String HBASE_TABLE = "Flight Record";
+  public static final String HBASE_TABLE = "Flight_Record";
   public static final String HBASE_COL_FAMILY = "Flights";
   public static final String HBASE_VAL_COL_NAME = "RowText";
   public static final String HBASE_YEAR_COL_NAME = "year";

@@ -8,6 +8,6 @@ public class FlightPartitioner extends Partitioner<FlightKey, IntWritable> {
 
   @Override
   public int getPartition(FlightKey flightKey, IntWritable intWritable, int i) {
-    return Math.abs(flightKey.hashCode()) % i;
+    return Math.abs(flightKey.hashCode() * 127) % i;
   }
 }

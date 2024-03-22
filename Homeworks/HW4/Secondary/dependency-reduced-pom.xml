@@ -19,7 +19,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass />
+                  <mainClass>neu.cs6240.Secondary</mainClass>
                 </transformer>
               </transformers>
               <finalName>${project.artifactId}-SecondarySort</finalName>
@@ -34,7 +34,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass />
+                  <mainClass>neu.cs6240.HPopulate</mainClass>
                 </transformer>
               </transformers>
               <finalName>${project.artifactId}-HPopulate</finalName>
@@ -49,7 +49,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass />
+                  <mainClass>neu.cs6240.HCompute</mainClass>
                 </transformer>
               </transformers>
               <finalName>${project.artifactId}-HCompute</finalName>

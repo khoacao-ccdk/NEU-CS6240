@@ -21,7 +21,7 @@ import static neu.cs6240.Utils.Common.HBASE_TABLE;
 
 public class HPopulate {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-        Configuration conf = new Configuration();
+        Configuration conf = HBaseConfiguration.create(new Configuration());
         String[] arguments = new GenericOptionsParser(conf, args).getRemainingArgs();
         if(arguments.length != 2){
             System.err.println("To use this, provide the following: arguments <in>, <out>");
@@ -72,6 +72,7 @@ public class HPopulate {
             admin.createTable(descriptor.build());
             admin.close();
         }catch (Exception e){
+            e.printStackTrace();
             System.out.println("Could not create connection!");
             System.exit(1);
         }
