@@ -1,0 +1,46 @@
+2024-03-24 22:53:36,935 INFO org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider (main): Connecting to ResourceManager at ip-10-0-16-199.us-west-2.compute.internal/10.0.16.199:8032
+2024-03-24 22:53:38,307 INFO org.apache.hadoop.yarn.client.AHSProxy (main): Connecting to Application History server at ip-10-0-16-199.us-west-2.compute.internal/10.0.16.199:10200
+2024-03-24 22:53:40,169 INFO org.apache.hadoop.conf.Configuration.deprecation (main): io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+2024-03-24 22:53:41,142 INFO org.apache.hadoop.mapreduce.JobResourceUploader (main): Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/hadoop/.staging/job_1711316561895_0003
+2024-03-24 22:53:55,395 INFO org.apache.hadoop.mapreduce.lib.input.FileInputFormat (main): Total input files to process : 1
+2024-03-24 22:53:55,511 INFO com.hadoop.compression.lzo.GPLNativeCodeLoader (main): Loaded native gpl library
+2024-03-24 22:53:55,525 INFO com.hadoop.compression.lzo.LzoCodec (main): Successfully loaded & initialized native-lzo library [hadoop-lzo rev 049362b7cf53ff5f739d6b1532457f2c6cd495e8]
+2024-03-24 22:53:55,915 INFO org.apache.hadoop.mapreduce.JobSubmitter (main): number of splits:65
+2024-03-24 22:53:56,242 INFO org.apache.hadoop.conf.Configuration.deprecation (main): io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+2024-03-24 22:53:57,146 INFO org.apache.hadoop.mapreduce.JobSubmitter (main): Submitting tokens for job: job_1711316561895_0003
+2024-03-24 22:53:57,146 INFO org.apache.hadoop.mapreduce.JobSubmitter (main): Executing with tokens: []
+2024-03-24 22:53:58,881 INFO org.apache.hadoop.conf.Configuration (main): resource-types.xml not found
+2024-03-24 22:53:58,887 INFO org.apache.hadoop.yarn.util.resource.ResourceUtils (main): Unable to find 'resource-types.xml'.
+2024-03-24 22:53:59,255 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl (main): Submitted application application_1711316561895_0003
+2024-03-24 22:53:59,463 INFO org.apache.hadoop.mapreduce.Job (main): The url to track the job: http://ip-10-0-16-199.us-west-2.compute.internal:20888/proxy/application_1711316561895_0003/
+2024-03-24 22:53:59,464 INFO org.apache.hadoop.mapreduce.Job (main): Running job: job_1711316561895_0003
+2024-03-24 22:54:20,821 INFO org.apache.hadoop.mapreduce.Job (main): Job job_1711316561895_0003 running in uber mode : false
+2024-03-24 22:54:20,822 INFO org.apache.hadoop.mapreduce.Job (main):  map 0% reduce 0%
+2024-03-24 22:55:24,414 INFO org.apache.hadoop.mapreduce.Job (main):  map 1% reduce 0%
+2024-03-24 22:55:28,522 INFO org.apache.hadoop.mapreduce.Job (main):  map 2% reduce 0%
+2024-03-24 22:55:54,677 INFO org.apache.hadoop.mapreduce.Job (main):  map 3% reduce 0%
+2024-03-24 22:56:00,716 INFO org.apache.hadoop.mapreduce.Job (main):  map 4% reduce 0%
+2024-03-24 22:56:04,736 INFO org.apache.hadoop.mapreduce.Job (main):  map 5% reduce 0%
+2024-03-24 22:56:07,760 INFO org.apache.hadoop.mapreduce.Job (main):  map 6% reduce 0%
+2024-03-24 22:56:12,791 INFO org.apache.hadoop.mapreduce.Job (main):  map 7% reduce 0%
+2024-03-24 22:56:16,815 INFO org.apache.hadoop.mapreduce.Job (main):  map 8% reduce 0%
+2024-03-24 22:56:19,830 INFO org.apache.hadoop.mapreduce.Job (main):  map 9% reduce 0%
+2024-03-24 22:56:25,869 INFO org.apache.hadoop.mapreduce.Job (main):  map 10% reduce 0%
+2024-03-24 22:56:29,891 INFO org.apache.hadoop.mapreduce.Job (main):  map 11% reduce 0%
+2024-03-24 22:56:33,005 INFO org.apache.hadoop.mapreduce.Job (main):  map 12% reduce 0%
+2024-03-24 22:56:38,027 INFO org.apache.hadoop.mapreduce.Job (main):  map 13% reduce 0%
+2024-03-24 22:56:42,050 INFO org.apache.hadoop.mapreduce.Job (main):  map 14% reduce 0%
+2024-03-24 22:56:45,065 INFO org.apache.hadoop.mapreduce.Job (main):  map 15% reduce 0%
+2024-03-24 22:56:50,098 INFO org.apache.hadoop.mapreduce.Job (main):  map 16% reduce 0%
+2024-03-24 22:56:54,119 INFO org.apache.hadoop.mapreduce.Job (main):  map 17% reduce 0%
+2024-03-24 22:56:57,165 INFO org.apache.hadoop.mapreduce.Job (main):  map 18% reduce 0%
+2024-03-24 22:57:03,224 INFO org.apache.hadoop.mapreduce.Job (main):  map 19% reduce 0%
+2024-03-24 22:57:10,276 INFO org.apache.hadoop.mapreduce.Job (main):  map 20% reduce 0%
+2024-03-24 22:57:17,311 INFO org.apache.hadoop.mapreduce.Job (main):  map 21% reduce 0%
+2024-03-24 22:57:33,498 INFO org.apache.hadoop.mapreduce.Job (main):  map 22% reduce 0%
+2024-03-24 22:58:36,826 INFO org.apache.hadoop.mapreduce.Job (main):  map 23% reduce 0%
+2024-03-24 22:58:42,888 INFO org.apache.hadoop.mapreduce.Job (main):  map 24% reduce 0%
+2024-03-24 22:58:54,958 INFO org.apache.hadoop.mapreduce.Job (main):  map 25% reduce 0%
+2024-03-24 22:59:09,062 INFO org.apache.hadoop.mapreduce.Job (main):  map 26% reduce 0%
+2024-03-24 22:59:21,122 INFO org.apache.hadoop.mapreduce.Job (main):  map 27% reduce 0%
+2024-03-24 22:59:40,194 INFO org.apache.hadoop.mapreduce.Job (main):  map 28% reduce 0%

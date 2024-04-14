@@ -22,6 +22,18 @@
                   <mainClass>neu.cs6240.Secondary</mainClass>
                 </transformer>
               </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/LICENSE*</exclude>
+                    <exclude>license/*</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <finalName>${project.artifactId}-SecondarySort</finalName>
             </configuration>
           </execution>
@@ -37,6 +49,18 @@
                   <mainClass>neu.cs6240.HPopulate</mainClass>
                 </transformer>
               </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/LICENSE*</exclude>
+                    <exclude>license/*</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <finalName>${project.artifactId}-HPopulate</finalName>
             </configuration>
           </execution>
@@ -52,6 +76,18 @@
                   <mainClass>neu.cs6240.HCompute</mainClass>
                 </transformer>
               </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/LICENSE*</exclude>
+                    <exclude>license/*</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <finalName>${project.artifactId}-HCompute</finalName>
             </configuration>
           </execution>
@@ -64,6 +100,6 @@
     <maven.compiler.source>8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <hadoop.version>3.3.5</hadoop.version>
-    <hbase.version>2.5.8</hbase.version>
+    <hbase.version>2.4.17</hbase.version>
   </properties>
 </project>

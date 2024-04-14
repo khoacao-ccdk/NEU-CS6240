@@ -1,0 +1,16 @@
+2024-03-24 21:59:27,068 INFO org.apache.hadoop.yarn.client.DefaultNoHARMFailoverProxyProvider (main): Connecting to ResourceManager at ip-10-0-16-199.us-west-2.compute.internal/10.0.16.199:8032
+2024-03-24 21:59:27,918 INFO org.apache.hadoop.yarn.client.AHSProxy (main): Connecting to Application History server at ip-10-0-16-199.us-west-2.compute.internal/10.0.16.199:10200
+2024-03-24 21:59:30,780 INFO org.apache.hadoop.conf.Configuration.deprecation (main): io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+2024-03-24 21:59:31,653 INFO org.apache.hadoop.mapreduce.JobResourceUploader (main): Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/hadoop/.staging/job_1711316561895_0001
+2024-03-24 21:59:36,946 INFO org.apache.hadoop.mapreduce.lib.input.FileInputFormat (main): Total input files to process : 1
+2024-03-24 21:59:36,996 INFO com.hadoop.compression.lzo.GPLNativeCodeLoader (main): Loaded native gpl library
+2024-03-24 21:59:37,001 INFO com.hadoop.compression.lzo.LzoCodec (main): Successfully loaded & initialized native-lzo library [hadoop-lzo rev 049362b7cf53ff5f739d6b1532457f2c6cd495e8]
+2024-03-24 21:59:37,451 INFO org.apache.hadoop.mapreduce.JobSubmitter (main): number of splits:65
+2024-03-24 21:59:37,605 INFO org.apache.hadoop.conf.Configuration.deprecation (main): io.bytes.per.checksum is deprecated. Instead, use dfs.bytes-per-checksum
+2024-03-24 21:59:38,082 INFO org.apache.hadoop.mapreduce.JobSubmitter (main): Submitting tokens for job: job_1711316561895_0001
+2024-03-24 21:59:38,083 INFO org.apache.hadoop.mapreduce.JobSubmitter (main): Executing with tokens: []
+2024-03-24 21:59:38,510 INFO org.apache.hadoop.conf.Configuration (main): resource-types.xml not found
+2024-03-24 21:59:38,510 INFO org.apache.hadoop.yarn.util.resource.ResourceUtils (main): Unable to find 'resource-types.xml'.
+2024-03-24 21:59:39,399 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl (main): Submitted application application_1711316561895_0001
+2024-03-24 21:59:39,551 INFO org.apache.hadoop.mapreduce.Job (main): The url to track the job: http://ip-10-0-16-199.us-west-2.compute.internal:20888/proxy/application_1711316561895_0001/
+2024-03-24 21:59:39,554 INFO org.apache.hadoop.mapreduce.Job (main): Running job: job_1711316561895_0001
