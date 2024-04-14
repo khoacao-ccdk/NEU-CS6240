@@ -1,39 +1,31 @@
-import static Utils.ColorExtractor.extractColor;
-
-import Utils.ImageWrapper;
-import com.google.gson.Gson;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import javax.imageio.ImageIO;
-import nu.pattern.OpenCV;
+import Utils.CatColorKey;
+import Utils.GroupingComparator;
+import Utils.SortComparator;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class CatColorAnalysis {
-  public static void main(String[] args) throws IOException {
-    OpenCV.loadLocally();
-    Scanner sc = new Scanner(System.in);
-    String jsonString = sc.nextLine();
-    sc.close();
+  public static void main(String[] args) throws Exception {
+    Configuration conf = new Configuration();
+    Job job = Job.getInstance(conf, "Cat Color Analysis");
+    job.setJarByClass(CatColorAnalysis.class);
+    job.setMapperClass(CatColorMapper.class);
+    job.setReducerClass(CatColorReducer.class);
+    job.setMapOutputKeyClass(CatColorKey.class);
+    job.setMapOutputValueClass(IntWritable.class);
+    job.setOutputKeyClass(CatColorKey.class);
+    job.setOutputValueClass(DoubleWritable.class);
+    job.setSortComparatorClass(SortComparator.class);
+    job.setGroupingComparatorClass(GroupingComparator.class);
 
-    // Parse the JSON string using Gson
-    Gson gson = new Gson();
-    ImageWrapper[] images = gson.fromJson(jsonString, ImageWrapper[].class);
-
-    // Access the first image and extract the full URL
-    String fullImageUrl = images[0].getFull();
-
-    // Print the full image URL
-    URL imageURL = new URL(fullImageUrl);
-    System.out.println(fullImageUrl);
-    BufferedImage image = ImageIO.read(imageURL);
-
-    Set<String> extractedColor = extractColor(image);
-    for(String color : extractedColor) {
-      System.out.println(color);
-    }
+    FileInputFormat.addInputPath(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    boolean success = job.waitForCompletion(true);
+    System.exit(success ? 0 : 1);
   }
-
 }
