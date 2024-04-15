@@ -21,9 +21,6 @@
                 <transformer>
                   <mainClass>CatColorAnalysis</mainClass>
                 </transformer>
-                <transformer>
-                  <mainClass>Test</mainClass>
-                </transformer>
               </transformers>
               <filters>
                 <filter>
@@ -51,9 +48,6 @@
                 <transformer>
                   <mainClass>Test</mainClass>
                 </transformer>
-                <transformer>
-                  <mainClass>Test</mainClass>
-                </transformer>
               </transformers>
               <filters>
                 <filter>
@@ -67,7 +61,7 @@
                   </excludes>
                 </filter>
               </filters>
-              <finalName>${project.artifactId}-CatColorAnalysis</finalName>
+              <finalName>${project.artifactId}-CatColorTest</finalName>
             </configuration>
           </execution>
         </executions>

@@ -53,20 +53,30 @@ public class CatColorKey implements WritableComparable {
     this.color = colorText.toString();
   }
 
+  /**
+   * This compare method is used by the grouping comparator to group keys based on their breed
+   *
+   * @param other the other key object
+   * @return
+   */
+  public int compare(CatColorKey other) {
+    return this.breed.compareTo(other.breed);
+  }
+
   @Override
   public int compareTo(Object o) {
     CatColorKey other = (CatColorKey) o;
     if (other.breed.equals(this.breed)) {
       //The dummy key will always come first
       if (this.color.equals(DUMMY_COLOR)) {
-        return 1;
-      } else if (other.color.equals(DUMMY_COLOR)) {
         return -1;
+      } else if (other.color.equals(DUMMY_COLOR)) {
+        return 1;
       } else {
         return this.color.compareTo(other.color);
       }
     } else {
-      return this.breed.compareTo(other.breed);
+      return compare(other);
     }
   }
 
@@ -94,15 +104,5 @@ public class CatColorKey implements WritableComparable {
     sb.append(", color='").append(color).append('\'');
     sb.append('}');
     return sb.toString();
-  }
-
-  /**
-   * This compare method is used by the grouping comparator to group keys based on their breed
-   *
-   * @param other the other key object
-   * @return
-   */
-  public int compare(CatColorKey other) {
-    return this.breed.compareTo(other.breed);
   }
 }

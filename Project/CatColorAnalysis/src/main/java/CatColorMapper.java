@@ -26,12 +26,10 @@ public class CatColorMapper extends Mapper<Object, Text, CatColorKey, IntWritabl
     String[] tokens = parser.parseLine(value.toString());
 
     // Parse the JSON string using Gson
-    Gson gson = new Gson();
     String breed = tokens[CatHeader.BREED];
-    ImageWrapper[] images = gson.fromJson(tokens[CatHeader.PHOTOS], ImageWrapper[].class);
 
     // Access the first image and extract the full URL
-    String fullImageUrl = images[0].getFull();
+    String fullImageUrl = tokens[CatHeader.PHOTOS].replaceAll(" ", "%20");
 
     URL imageURL = new URL(fullImageUrl);
     BufferedImage image = null;

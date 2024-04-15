@@ -1,5 +1,0 @@
-# Created by .ignore support plugin (hsz.mobi)
-*.iml
-.idea
-target
-core_package/src/configuration/main.json
