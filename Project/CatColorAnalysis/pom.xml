@@ -40,18 +40,6 @@
       <artifactId>color-thief</artifactId>
       <version>1.1.2</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.10.1</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.openpnp/opencv -->
-    <dependency>
-      <groupId>org.openpnp</groupId>
-      <artifactId>opencv</artifactId>
-      <version>4.9.0-0</version>
-    </dependency>
   </dependencies>
   <build>
     <plugins>

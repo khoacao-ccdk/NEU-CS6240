@@ -1,10 +1,6 @@
-import Utils.CatHeader;
 import Utils.ColorExtractor;
-import Utils.ImageWrapper;
-import com.google.gson.Gson;
-import com.opencsv.CSVParser;
+
 import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.Set;

@@ -1,6 +1,5 @@
 import Utils.CatColorKey;
 import Utils.ColorExtractor;
-import Utils.ImageWrapper;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +11,6 @@ import javax.imageio.ImageIO;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import com.google.gson.Gson;
 import com.opencsv.CSVParser;
 import Utils.CatHeader;
 
